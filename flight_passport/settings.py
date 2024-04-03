@@ -132,7 +132,7 @@ DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "Openskies Flight Pass
 LOGO_URL = "https://www.openskies.sh/images/logo.svg"
 APPLICATION_NAME = "Openskies Flight Passport"
 
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 if DEBUG:
@@ -183,8 +183,7 @@ JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("OIDC_RSA_PRIVATE_KEY")
 
 JWT_PAYLOAD_ENRICHER = "vault.jwt_utils.payload_enricher"
 
-SHOW_ADMIN = int(os.environ.get("SHOW_ADMIN", 0))
-
+SHOW_ADMIN = True
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -228,18 +227,23 @@ STATIC_URL = "/static/"
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {}
-USING_DOCKER_COMPOSE = int(os.environ.get("USING_DOCKER_COMPOSE", 0))
-if USING_DOCKER_COMPOSE:
-    DATABASES = {
+DATABASES = {
         "default": {
             "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
             "NAME": os.environ.get("DB_DATABASE", os.path.join(BASE_DIR, "flight_passport.sqlite3")),
         }
     }
-else:
-    DATABASES["default"] = dj_database_url.config(conn_max_age=600)
+# DATABASES = {}
+# USING_DOCKER_COMPOSE = int(os.environ.get("USING_DOCKER_COMPOSE", 0))
+# if USING_DOCKER_COMPOSE:
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
+#             "NAME": os.environ.get("DB_DATABASE", os.path.join(BASE_DIR, "flight_passport.sqlite3")),
+#         }
+#     }
+# else:
+#     DATABASES["default"] = dj_database_url.config(conn_max_age=600)
 
 # LOGGING = {
 #     'version': 1,
